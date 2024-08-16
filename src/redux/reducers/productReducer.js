@@ -44,7 +44,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        products: action.payload.products,
+        products: action.payload,
         pagination: {
           ...state.pagination,
           total: action.payload.total,
