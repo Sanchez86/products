@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../redux/actions/productsActions';
-import ProductCard from 'components/product/ProductCard/ProductCard';
-import PaginationButtons from 'components/product/PaginationButtons/PaginationButtons';
-import ProductTable from 'components/product/ProductTable/ProductTable';
 import {
   selectProducts,
   selectPagination,
   selectLoading,
   selectError,
 } from '../../redux/selectors/productSelectors';
+import ProductList from 'components/product/ProductList/ProductList';
+import PaginationButtons from 'components/product/PaginationButtons/PaginationButtons';
+import ProductTable from 'components/product/ProductTable/ProductTable';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
@@ -29,15 +29,7 @@ const ProductListPage = () => {
     <div>
       <h1>Products</h1>
       <PaginationButtons />
-      <div className="product-list">
-        {products?.length > 0 ? (
-          products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <p>No products found.</p>
-        )}
-      </div>
+      <ProductList products={products} />
       <ProductTable products={products} />
       <PaginationButtons />
     </div>
