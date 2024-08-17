@@ -6,10 +6,10 @@ import {
   FETCH_PRODUCT_DETAILS_SUCCESS,
   FETCH_PRODUCT_DETAILS_FAILURE,
   CREATE_PRODUCT_REQUEST,
-  UPDATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_SUCCESS,
-  UPDATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_FAILURE,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAILURE,
   DELETE_PRODUCT_SUCCESS,
   RESET_PRODUCT_FORM,
@@ -20,9 +20,15 @@ const initialState = {
   products: [],
   product: null,
   form: {
-    name: '',
+    title: '',
     price: '',
     description: '',
+    category: '',
+    image: '',
+    rating: {
+      rate: 0,
+      count: 0,
+    },
     published: false,
   },
   loading: false,
@@ -69,7 +75,11 @@ const productReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case CREATE_PRODUCT_SUCCESS:
-      return { ...state, loading: false, product: action.payload };
+      return {
+        ...state,
+        loading: false,
+        products: [...state.products, action.payload],
+      };
 
     case CREATE_PRODUCT_FAILURE:
       return { ...state, loading: false, error: action.payload };
@@ -79,7 +89,13 @@ const productReducer = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case UPDATE_PRODUCT_SUCCESS:
-      return { ...state, loading: false, product: action.payload };
+      return {
+        ...state,
+        loading: false,
+        products: state.products.map((product) =>
+          product.id === action.payload.id ? action.payload : product,
+        ),
+      };
 
     case UPDATE_PRODUCT_FAILURE:
       return { ...state, loading: false, error: action.payload };
