@@ -18,6 +18,7 @@ import {
 
 const initialState = {
   products: [],
+  formProducts: [],
   product: null,
   form: {
     title: '',
@@ -78,7 +79,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        products: [...state.products, action.payload],
+        formProducts: [...state.formProducts, action.payload],
       };
 
     case CREATE_PRODUCT_FAILURE:
@@ -104,7 +105,10 @@ const productReducer = (state = initialState, action) => {
     case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
-        products: state.products.filter(
+        apiProducts: state.apiProducts.filter(
+          (product) => product.id !== action.payload,
+        ),
+        formProducts: state.formProducts.filter(
           (product) => product.id !== action.payload,
         ),
       };

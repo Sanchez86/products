@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import {
   fetchProductsAPI,
   fetchProductDetailsAPI,
@@ -59,10 +60,10 @@ export const fetchProductDetailsFailure = (error) => ({
   payload: error,
 });
 
-export const createProductRequest = (product) => ({
-  type: CREATE_PRODUCT_REQUEST,
-  payload: product,
-});
+// export const createProductRequest = (product) => ({
+//   type: CREATE_PRODUCT_REQUEST,
+//   payload: product,
+// });
 
 export const createProductSuccess = (product) => ({
   type: CREATE_PRODUCT_SUCCESS,
@@ -152,10 +153,14 @@ export const fetchProductDetails = (id) => {
 // Create product
 export const createProduct = (product) => {
   return async (dispatch) => {
-    dispatch({ type: CREATE_PRODUCT_REQUEST, payload: product });
+    dispatch({ type: CREATE_PRODUCT_REQUEST });
+
     try {
       const createdProduct = await createProductAPI(product);
-      dispatch(createProductSuccess(createdProduct));
+
+      const uniqueProduct = { ...createdProduct, id: uuidv4() };
+
+      dispatch(createProductSuccess(uniqueProduct));
     } catch (error) {
       dispatch(createProductFailure(error.message));
     }
