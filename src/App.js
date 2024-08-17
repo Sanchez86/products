@@ -6,6 +6,8 @@ import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import CreateProductPage from './pages/CreateProductPage/CreateProductPage';
 import EditProductPage from './pages/EditProductPage/EditProductPage';
 import Header from './components/layout/Header/Header';
+import PrivateRoute from './pages/PrivateRoute';
+import Login from './pages/Login/Login';
 
 const App = () => {
   return (
@@ -13,11 +15,24 @@ const App = () => {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductListPage />} />
-          <Route path="/products/:id" element={<ProductDetailPage />} />
-          <Route path="/create-product" element={<CreateProductPage />} />
-          <Route path="/edit-product/:id" element={<EditProductPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<PrivateRoute element={<HomePage />} />} />
+          <Route
+            path="/products"
+            element={<PrivateRoute element={<ProductListPage />} />}
+          />
+          <Route
+            path="/products/:id"
+            element={<PrivateRoute element={<ProductDetailPage />} />}
+          />
+          <Route
+            path="/create-product"
+            element={<PrivateRoute element={<CreateProductPage />} />}
+          />
+          <Route
+            path="/edit-product/:id"
+            element={<PrivateRoute element={<EditProductPage />} />}
+          />
         </Routes>
       </main>
     </div>
