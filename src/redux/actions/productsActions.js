@@ -1,3 +1,11 @@
+import {
+  fetchProductsAPI,
+  fetchProductDetailsAPI,
+  createProductAPI,
+  updateProductAPI,
+  deleteProductAPI,
+} from '../../api/apiProducts';
+
 // Action Types
 export const FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST';
 export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
@@ -114,3 +122,68 @@ export const fetchProductsRequest = (limit = 20) => ({
   type: FETCH_PRODUCTS_REQUEST,
   payload: { limit },
 });
+
+// Fetch products
+export const fetchProducts = (limit) => {
+  return async (dispatch) => {
+    dispatch({ type: FETCH_PRODUCTS_REQUEST });
+    try {
+      const products = await fetchProductsAPI(limit);
+      dispatch(fetchProductsSuccess(products));
+    } catch (error) {
+      dispatch(fetchProductsFailure(error.message));
+    }
+  };
+};
+
+// Fetch product details
+export const fetchProductDetails = (id) => {
+  return async (dispatch) => {
+    dispatch({ type: FETCH_PRODUCT_DETAILS_REQUEST, payload: id });
+    try {
+      const product = await fetchProductDetailsAPI(id);
+      dispatch(fetchProductDetailsSuccess(product));
+    } catch (error) {
+      dispatch(fetchProductDetailsFailure(error.message));
+    }
+  };
+};
+
+// Create product
+export const createProduct = (product) => {
+  return async (dispatch) => {
+    dispatch({ type: CREATE_PRODUCT_REQUEST, payload: product });
+    try {
+      const createdProduct = await createProductAPI(product);
+      dispatch(createProductSuccess(createdProduct));
+    } catch (error) {
+      dispatch(createProductFailure(error.message));
+    }
+  };
+};
+
+// Update product
+export const updateProduct = (id, product) => {
+  return async (dispatch) => {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST, payload: product });
+    try {
+      const updatedProduct = await updateProductAPI(id, product);
+      dispatch(updateProductSuccess(updatedProduct));
+    } catch (error) {
+      dispatch(updateProductFailure(error.message));
+    }
+  };
+};
+
+// Delete product
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_PRODUCT_REQUEST, payload: id });
+    try {
+      await deleteProductAPI(id);
+      dispatch(deleteProductSuccess(id));
+    } catch (error) {
+      dispatch(deleteProductFailure(error.message));
+    }
+  };
+};
