@@ -7,6 +7,7 @@ import {
   updateProduct,
 } from '../../redux/actions/productsActions';
 import { selectProductById } from '../../redux/selectors/productSelectors';
+import Loader from 'components/common/Loader/Loader';
 import styles from './EditProductPage.module.css';
 
 const EditProductPage = () => {
@@ -50,7 +51,7 @@ const EditProductPage = () => {
   };
 
   if (!product) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <Loader />;
   }
 
   return (

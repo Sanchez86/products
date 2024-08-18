@@ -7,6 +7,7 @@ import {
   selectError
 } from '../../redux/selectors/productSelectors';
 import ProductTabs from '../../components/product/ProductTabs/ProductTabs';
+import Loader from 'components/common/Loader/Loader';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const ProductListPage = () => {
     setLimit(prevLimit => prevLimit + increment);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   return (

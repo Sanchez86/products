@@ -86,7 +86,7 @@ const ProductForm = () => {
           required
         />
       </label>
-      <label>
+      <label className={styles.check}>
         Published:
         <input
           type="checkbox"

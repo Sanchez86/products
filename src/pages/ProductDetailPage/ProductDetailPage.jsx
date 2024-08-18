@@ -9,6 +9,7 @@ import {
   selectError,
   selectCustomProductById,
 } from '../../redux/selectors/productSelectors';
+import Loader from 'components/common/Loader/Loader';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const ProductDetailPage = () => {
     }
   }, [dispatch, id, customProduct]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   const product = customProduct || productFromAPI;

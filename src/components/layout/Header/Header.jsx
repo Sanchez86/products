@@ -21,16 +21,19 @@ const Header = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-          <li>
-            <Link to="/create-product">Create Product</Link>
-          </li>
+         
           {isAuthenticated && (
+             <>
+             <li>
+             <Link to="/products">Products</Link>
+           </li>
+           <li>
+             <Link to="/create-product">Create Product</Link>
+           </li>
             <li>
               <Logout />
             </li>
+             </>
           )}
         </ul>
       </nav>

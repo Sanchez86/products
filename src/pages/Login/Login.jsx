@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styles from './Login.module.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -23,9 +24,9 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <form className={styles.loginForm} onSubmit={handleSubmit}>
+        <h2>Login</h2>
         <input
           type="text"
           placeholder="Username"
