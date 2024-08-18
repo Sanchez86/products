@@ -1,10 +1,9 @@
 // API URL
 const BASE_URL = 'https://fakestoreapi.com/products';
 
-// Fetch all products
-export const fetchProductsAPI = async (limit = 20) => {
+export const fetchProductsAPI = async (start = 0, limit = 8) => {
   try {
-    const response = await fetch(`${BASE_URL}?limit=${limit}`);
+    const response = await fetch(`${BASE_URL}?limit=${limit}&offset=${start}`);
     if (!response.ok) {
       throw new Error('Failed to fetch products');
     }

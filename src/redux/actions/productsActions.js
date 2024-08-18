@@ -125,11 +125,11 @@ export const fetchProductsRequest = (limit = 20) => ({
 });
 
 // Fetch products
-export const fetchProducts = (limit) => {
+export const fetchProducts = (start = 0, limit = 8) => {
   return async (dispatch) => {
     dispatch({ type: FETCH_PRODUCTS_REQUEST });
     try {
-      const products = await fetchProductsAPI(limit);
+      const products = await fetchProductsAPI(start, limit);
       dispatch(fetchProductsSuccess(products));
     } catch (error) {
       dispatch(fetchProductsFailure(error.message));

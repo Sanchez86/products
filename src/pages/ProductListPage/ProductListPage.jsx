@@ -1,22 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../redux/actions/productsActions';
 import {
-  selectPagination,
+  selectProducts,
   selectLoading,
   selectError
 } from '../../redux/selectors/productSelectors';
-import ProductTabs from 'components/product/ProductTabs/ProductTabs';
+import ProductTabs from '../../components/product/ProductTabs/ProductTabs';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
+  const products = useSelector(selectProducts);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
+  const [offset, setStart] = useState(0);
+  const [limit, setLimit] = useState(8);
+
   useEffect(() => {
-    dispatch(fetchProducts(pagination.limit, pagination.currentPage));
-  }, [dispatch, pagination.limit, pagination.currentPage]);
+    dispatch(fetchProducts(offset, limit));
+  }, [dispatch, offset, limit]);
+
+  const handleLoadMore = (increment) => {
+    setStart(prevStart => prevStart + increment);
+    setLimit(prevLimit => prevLimit + increment);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -24,7 +32,10 @@ const ProductListPage = () => {
   return (
     <div>
       <h1>Products</h1>
-      <ProductTabs />
+      <ProductTabs 
+        products={products} 
+        handleLoadMore={handleLoadMore}
+      />
     </div>
   );
 };

@@ -1,27 +1,47 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setProductsPagination } from '../../../redux/actions/productsActions';
-import { selectPagination } from '../../../redux/selectors/productSelectors';
+import PropTypes from 'prop-types';
+import styles from './PaginationButtons.module.css';
 
-const PaginationButtons = () => {
-  const dispatch = useDispatch();
-  const pagination = useSelector(selectPagination);
-
-  const handlePageChange = (newPage) => {
-    dispatch(setProductsPagination({ ...pagination, currentPage: newPage }));
+const PaginationButtons = ({ currentPage, totalPages, onPageChange }) => {
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      onPageChange(page);
+    }
   };
 
   return (
-    <div className="pagination-buttons">
-      <button onClick={() => handlePageChange(pagination.currentPage - 1)} disabled={pagination.currentPage === 1}>
-        Previous
+    <div className={styles.pagination}>
+      <button
+        onClick={() => handlePageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={styles.button}
+      >
+        &lt;
       </button>
-      <span>Page {pagination.currentPage}</span>
-      <button onClick={() => handlePageChange(pagination.currentPage + 1)}>
-        Next
+      {[...Array(totalPages).keys()].map((page) => (
+        <button
+          key={page + 1}
+          onClick={() => handlePageChange(page + 1)}
+          className={`${styles.button} ${currentPage === page + 1 ? styles.active : ''}`}
+        >
+          {page + 1}
+        </button>
+      ))}
+      <button
+        onClick={() => handlePageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={styles.button}
+      >
+        &gt;
       </button>
     </div>
   );
+};
+
+PaginationButtons.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 export default PaginationButtons;
