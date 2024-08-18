@@ -27,3 +27,14 @@ export const selectError = createSelector(
   [selectProductsState],
   (productsState) => productsState.error,
 );
+
+export const selectCreatedProducts = createSelector(
+  [selectProductsState],
+  (productsState) => productsState.formProducts,
+);
+
+export const selectCustomProductById = createSelector(
+  [selectCreatedProducts, (state, productId) => productId],
+  (formProducts, productId) =>
+    formProducts.find((product) => product.id === productId),
+);
