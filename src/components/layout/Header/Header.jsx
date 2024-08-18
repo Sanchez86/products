@@ -2,19 +2,21 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Logout from '../../Logout/Logout';
+import styles from './Header.module.css';
 
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userName = useSelector((state) => state.auth.user);
+  
   return (
-    <header className="header">
-      <nav>
+    <header className={styles.header}>
+      <nav className={styles.nav}>
         <ul>
-        {userName && (
-          <li>
-            {userName}
-          </li>    
-            )}
+          {userName && (
+            <li className={styles.username}>
+              {userName}
+            </li>    
+          )}
           
           <li>
             <Link to="/">Home</Link>
