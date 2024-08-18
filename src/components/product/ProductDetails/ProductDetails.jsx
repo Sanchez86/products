@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaStarHalfAlt, FaRegStar, FaEdit } from 'react-icons/fa';
 import { AiOutlineEye } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import styles from './ProductDetails.module.css';
 
 const ProductDetails = ({ product }) => {
@@ -28,6 +29,10 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className={styles['product-details']}>
+      <Link to={`/products/edit-product/${product.id}`} className={styles.link}>
+        <FaEdit className={styles.editIcon} /> Edit Product
+      </Link>
+
       <img
         src={product.image || 'https://via.placeholder.com/150'}
         alt={product.title}

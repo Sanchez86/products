@@ -96,6 +96,9 @@ const productReducer = (state = initialState, action) => {
         products: state.products.map((product) =>
           product.id === action.payload.id ? action.payload : product,
         ),
+        formProducts: state.formProducts.map((product) =>
+          product.id === action.payload.id ? action.payload : product,
+        ),
       };
 
     case UPDATE_PRODUCT_FAILURE:

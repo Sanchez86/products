@@ -38,3 +38,20 @@ export const selectCustomProductById = createSelector(
   (formProducts, productId) =>
     formProducts.find((product) => product.id === productId),
 );
+
+export const selectProductById = createSelector(
+  [selectCreatedProducts, selectProductsState, (state, productId) => productId],
+  (formProducts, apiProducts, productId) => {
+    const foundInForm = formProducts.find(
+      (product) => product.id === productId,
+    );
+
+    if (foundInForm) {
+      return foundInForm;
+    }
+
+    return apiProducts.products.find(
+      (product) => String(product.id) === String(productId),
+    );
+  },
+);

@@ -169,13 +169,21 @@ export const createProduct = (product) => {
 
 // Update product
 export const updateProduct = (id, product) => {
-  return async (dispatch) => {
-    dispatch({ type: UPDATE_PRODUCT_REQUEST, payload: product });
-    try {
-      const updatedProduct = await updateProductAPI(id, product);
-      dispatch(updateProductSuccess(updatedProduct));
-    } catch (error) {
-      dispatch(updateProductFailure(error.message));
+  return async (dispatch, getState) => {
+    const { formProducts } = getState().products;
+
+    const existingProduct = formProducts.find((p) => p.id === id);
+
+    if (existingProduct) {
+      dispatch(updateProductSuccess(product));
+    } else {
+      dispatch({ type: UPDATE_PRODUCT_REQUEST, payload: product });
+      try {
+        const updatedProduct = await updateProductAPI(id, product);
+        dispatch(updateProductSuccess(updatedProduct));
+      } catch (error) {
+        dispatch(updateProductFailure(error.message));
+      }
     }
   };
 };
