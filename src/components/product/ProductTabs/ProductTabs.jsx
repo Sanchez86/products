@@ -70,12 +70,13 @@ const ProductTabs = ({ products, handleLoadMore }) => {
       </div>
       {activeTab === 'apiProducts' && (
         <div>
+          <ProductList products={apiCurrentProducts} />
           <PaginationButtons
             currentPage={apiCurrentPage}
             totalPages={apiTotalPages}
             onPageChange={handleApiPageChange}
           />
-          <ProductList products={apiCurrentProducts} />
+          
           <div className={styles.buttons}>
             <button
               onClick={() => handleLoadMore(8)}
@@ -100,12 +101,12 @@ const ProductTabs = ({ products, handleLoadMore }) => {
       )}
       {activeTab === 'createdProducts' && (
         <div>
+          <ProductList products={createdCurrentProducts} />
           <PaginationButtons
             currentPage={createdCurrentPage}
             totalPages={createdTotalPages}
             onPageChange={handleCreatedPageChange}
           />
-          <ProductList products={createdCurrentProducts} />
         </div>
       )}
     </div>
