@@ -32,6 +32,7 @@ const ProductDetails = ({ product }) => {
       <Link to={`/products/edit-product/${product.id}`} className={styles.link}>
         <FaEdit className={styles.editIcon} /> Edit Product
       </Link>
+      <br />
 
       <img
         src={product.image || 'https://via.placeholder.com/150'}

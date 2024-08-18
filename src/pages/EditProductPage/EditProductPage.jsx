@@ -90,9 +90,8 @@ const EditProductPage = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="image">Image URL</label>
           <img src={formData.image} alt="" className={styles.image} />
-          
+          <label htmlFor="image">Image URL</label>
           <input
             id="image"
             type="text"
@@ -113,12 +112,14 @@ const EditProductPage = () => {
             className={styles.formControl}
           />
         </div>
-        <button type="submit" className={styles.submitButton}>
-          Update Product
-        </button>
-        <button onClick={handleRemove} className={styles.removeButton}>
-          Rmove Product
-        </button>
+        <div className={styles.buttons}>
+          <button type="submit" className={styles.submitButton}>
+            Update Product
+          </button>
+          <button onClick={handleRemove} className={styles.removeButton}>
+            Rmove Product
+          </button>
+        </div>
       </form>
     </div>
   );

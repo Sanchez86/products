@@ -8,10 +8,11 @@ import EditProductPage from './pages/EditProductPage/EditProductPage';
 import Header from './components/layout/Header/Header';
 import PrivateRoute from './pages/PrivateRoute';
 import Login from './pages/Login/Login';
+import styles from './App.module.css';
 
 const App = () => {
   return (
-    <div>
+    <div className={styles.App}>
       <Header />
       <main>
         <Routes>

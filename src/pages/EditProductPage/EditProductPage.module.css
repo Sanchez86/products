@@ -92,3 +92,13 @@
 .removeButton:hover {
   background-color: red;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons button {
+  display: block;
+  margin: 0 5px;
+}
