@@ -28,6 +28,10 @@ export const DELETE_PRODUCT_REQUEST = 'DELETE_PRODUCT_REQUEST';
 export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
 export const DELETE_PRODUCT_FAILURE = 'DELETE_PRODUCT_FAILURE';
 
+export const DELETE_CREATED_PRODUCT_REQUEST = 'DELETE_CREATED_PRODUCT_REQUEST';
+export const DELETE_CREATED_PRODUCT_SUCCESS = 'DELETE_CREATED_PRODUCT_SUCCESS';
+export const DELETE_CREATED_PRODUCT_FAILURE = 'DELETE_CREATED_PRODUCT_FAILURE';
+
 export const SET_PRODUCTS_FILTER = 'SET_PRODUCTS_FILTER';
 
 export const SET_PRODUCTS_PAGINATION = 'SET_PRODUCTS_PAGINATION';
@@ -188,15 +192,25 @@ export const updateProduct = (id, product) => {
   };
 };
 
-// Delete product
+// Remove product
 export const deleteProduct = (id) => {
-  return async (dispatch) => {
-    dispatch({ type: DELETE_PRODUCT_REQUEST, payload: id });
-    try {
-      await deleteProductAPI(id);
-      dispatch(deleteProductSuccess(id));
-    } catch (error) {
-      dispatch(deleteProductFailure(error.message));
+  return async (dispatch, getState) => {
+    const { formProducts } = getState().products;
+
+    const createdProduct = formProducts.find((p) => p.id === id);
+
+    if (createdProduct) {
+      dispatch({ type: DELETE_CREATED_PRODUCT_REQUEST, payload: id });
+      dispatch({ type: DELETE_CREATED_PRODUCT_SUCCESS, payload: id });
+    } else {
+      // Удаление продукта через апи
+      dispatch({ type: DELETE_PRODUCT_REQUEST, payload: id });
+      try {
+        await deleteProductAPI(id);
+        dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: id });
+      } catch (error) {
+        dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
+      }
     }
   };
 };

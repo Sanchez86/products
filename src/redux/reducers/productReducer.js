@@ -11,7 +11,10 @@ import {
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
   UPDATE_PRODUCT_FAILURE,
+  DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
+  DELETE_CREATED_PRODUCT_REQUEST,
+  DELETE_CREATED_PRODUCT_SUCCESS,
   RESET_PRODUCT_FORM,
   SET_PRODUCTS_PAGINATION,
 } from '../actions/productsActions';
@@ -104,13 +107,27 @@ const productReducer = (state = initialState, action) => {
     case UPDATE_PRODUCT_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
-    // Delete Product
+    // Delete Product (API)
+    case DELETE_PRODUCT_REQUEST:
+      return { ...state, loading: true };
+
     case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
-        apiProducts: state.apiProducts.filter(
+        loading: false,
+        products: state.products.filter(
           (product) => product.id !== action.payload,
         ),
+      };
+
+    // Delete Product (Form)
+    case DELETE_CREATED_PRODUCT_REQUEST:
+      return { ...state, loading: true };
+
+    case DELETE_CREATED_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
         formProducts: state.formProducts.filter(
           (product) => product.id !== action.payload,
         ),

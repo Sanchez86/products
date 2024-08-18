@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
+  deleteProduct,
   fetchProductDetails,
   updateProduct,
 } from '../../redux/actions/productsActions';
@@ -40,6 +41,11 @@ const EditProductPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProduct(id, formData));
+    navigate('/products');
+  };
+
+  const handleRemove = () => {
+    dispatch(deleteProduct(id));
     navigate('/products');
   };
 
@@ -109,6 +115,9 @@ const EditProductPage = () => {
         </div>
         <button type="submit" className={styles.submitButton}>
           Update Product
+        </button>
+        <button onClick={handleRemove} className={styles.removeButton}>
+          Rmove Product
         </button>
       </form>
     </div>
